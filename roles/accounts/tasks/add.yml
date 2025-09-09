@@ -1,6 +1,6 @@
 ---
 - name: "Create account {{ account.username }}"
-  when: account.username not in synusers_list.stdout_lines
+  when: account.username not in existing_accounts.stdout_lines
   ansible.builtin.command: "/usr/syno/sbin/synouser --add {{ account.username | quote }} {{ account.password | quote }} '' 0 '' '' "
 
 - name: "Set groups for {{ account.username }}"

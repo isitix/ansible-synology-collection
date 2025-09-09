@@ -1,0 +1,5 @@
+- ansible.builtin.import_tasks: list.yml
+  when: accounts_do_list | default(true)
+
+- ansible.builtin.import_tasks: add.yml
+  when: accounts_do_add | default(true)

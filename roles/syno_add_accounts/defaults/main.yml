@@ -1,1 +1,0 @@
-syno_accounts: "{{ undef(hint='You must specify syno_accounts') }}"

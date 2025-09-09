@@ -1,0 +1,6 @@
+- name: Get list of accounts
+  become: true
+  ansible.builtin.command: "/usr/syno/sbin/synouser --enum all"
+  when: true
+  changed_when: false
+  register: existing_accounts
