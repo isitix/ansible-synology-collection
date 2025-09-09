@@ -1,5 +1,12 @@
+---
 - ansible.builtin.import_tasks: list.yml
-  when: accounts_do_list | default(true)
+  when:  accounts_do_add | default(false) or accounts_do_list | default(false)
 
 - ansible.builtin.import_tasks: add.yml
-  when: accounts_do_add | default(true)
+  when: accounts_do_add | default(false)
+
+- ansible.builtin.import_tasks: samba_disable.yml
+  when: accounts_do_disable_samba | default(false)
+
+- ansible.builtin.import_tasks: delete.yml
+  when: accounts_do_delete | default(false)

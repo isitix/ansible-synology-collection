@@ -1,3 +1,4 @@
+---
 - name: Get list of accounts
   become: true
   ansible.builtin.command: "/usr/syno/sbin/synouser --enum all"

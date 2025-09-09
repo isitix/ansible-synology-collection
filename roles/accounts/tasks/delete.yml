@@ -1,0 +1,9 @@
+- name: "Delete Synology local user {{ account.username }}"
+  ansible.builtin.command:
+    argv:
+      -  /usr/syno/sbin/synouser
+      - --del
+      - "{{ account.username }}"
+  register: synouser_delete
+  failed_when: synouser_delete.rc not in [0,1]
+  changed_when: synouser_delete.rc == 0

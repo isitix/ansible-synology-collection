@@ -1,21 +1,25 @@
 ---
 argument_specs:
   main:
-    short_description: Manage synology account
+    short_description: Create or deactivate a Synology account
     options:
+      accounts_do_list:
+        type: bool
+        default: false
+      accounts_do_create:
+        type: bool
+        default: false
+      accounts_do_disable_samba:
+        type: bool
+        default: false
+      accounts_do_delete:
+        type: bool
+        default: false
       account:
+        type: dict
+        required: true
         options:
-          name:
-            type: str
-            required: true
-            description: Username
-          password:
-            type: str
-            required: true
-            no_log: true
-            description: Initial password
-          groups:
-            type: list
-            elements: str
-            required: false
-            description: Groups to assign
+          username: {type: str, required: true}
+          password: {type: str, required: false, no_log: true}
+          groups:   {type: list, elements: str, required: false}
+          create_home: {type: bool, default: true}

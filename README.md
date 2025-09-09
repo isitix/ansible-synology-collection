@@ -1,3 +1,5 @@
+This collection is a fork of tafeen.synology. It has been adapted and republished under the namespace isitix for internal use.
+
 # Ansible Collection - tafeen.synology
 
 Synology setup automation, current version was tested on DSM 7.2

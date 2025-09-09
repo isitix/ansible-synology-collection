@@ -1,0 +1,11 @@
+---
+- name: "Disable Synology Directory Server (samba) user {{ account.username }}"
+  ansible.builtin.command:
+      argv:
+        - /usr/local/bin/samba-tool
+        - user
+        - disable
+        - "{{ account.username }}"
+  register: samba_disable_result
+  changed_when: samba_disable_result.rc == 0
+  failed_when: samba_disable_result.rc not in [0, 1]
