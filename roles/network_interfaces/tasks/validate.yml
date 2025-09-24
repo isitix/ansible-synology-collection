@@ -1,26 +1,36 @@
 - vars:
     iface: "{{ interface }}"
+    config: "{{ 'true' if action == 'config' else 'false' }}"
 
-- name: no static fields if dhcp
-  ansible.builtin.assert:
-    that:
-      - not iface.dhcp or
-        (
-          (iface.address | default(None)) is none and
-          (iface.netmask | default(None)) is none and
-          (iface.gateway | default(None)) is none and
-          (iface.dns     | default(None)) is none
-        )
-    fail_msg: "When dhcp is true, no address/netmask/gateway/dns"
+  block:
+    - name: interface object is set and interface name is defined
+      ansible.builtin.assert:
+        - that:
+            - iface is defined
+            - iface.name is defined and iface.name | length > 0
+      fail_msg: "The interface object must be set and interface name must be defined"
 
-- name: address and netmask are mandatory when static configuration
-  ansible.builtin.assert:
-    that:
-      - iface.dhcp or (iface.address is not none and iface.netmask is not none)
-    fail_msg: "When static configuration, 'address' and 'netmask' are required"
+    - name: no static fields if dhcp
+      ansible.builtin.assert:
+        that:
+          - not iface.dhcp or
+            (
+              (iface.address | default(None)) is none and
+              (iface.netmask | default(None)) is none and
+              (iface.gateway | default(None)) is none and
+              (iface.dns     | default(None)) is none
+            )
+        fail_msg: "When dhcp is true, no address/netmask/gateway/dns"
 
-- name: Vlan_id if vlan (802.1Q) is enabled
-  ansible.builtin.assert:
-    that:
-      - not iface.enable_vlan or (iface.vlan_id is string and iface.vlan_id|length > 0)
-    fail_msg: "'vlan_id' is required when enable_vlan=true"
+    - name: address and netmask are mandatory when static configuration
+      ansible.builtin.assert:
+        that:
+          - iface.dhcp or (iface.address is not none and iface.netmask is not none)
+        fail_msg: "When static configuration, 'address' and 'netmask' are required"
+
+    - name: Vlan_id if vlan (802.1Q) is enabled
+      ansible.builtin.assert:
+        that:
+          - not iface.enable_vlan or (iface.vlan_id is string and iface.vlan_id|length > 0)
+        fail_msg: "'vlan_id' is required when enable_vlan=true"
+  when: config
