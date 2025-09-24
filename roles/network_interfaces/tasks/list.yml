@@ -4,4 +4,4 @@
   ansible.builtin.command: "/usr/syno/sbin/synonet --show"
   when: true
   changed_when: false
-  register: existing_interfaces
+  register: interfaces

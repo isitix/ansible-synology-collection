@@ -10,35 +10,16 @@ argument_specs:
       interface:
         type: dict
         options:
-          name:
+          iface:
             type: str
             description: "Interface name (e.g. eth0)"
           dhcp:
             type: bool
             default: false
             description: "Use DHCP if true; otherwise static"
-          address:
+          ip:
             type: str
             description: "IPv4 address when dhcp is false"
-          netmask:
+          mask:
             type: str
-            description: "Netmask when dhcp isfalse"
-          gateway:
-            type: str
-            description: "Optional default gateway when dhcp is false"
-          dns:
-            type: str
-            description: "Optional DNS server when dhcp is false"
-          mtu:
-            type: int
-            default: 1500
-          state:
-            type: str
-            choices: [up, down]
-            default: up
-          enable_vlan:
-            type: bool
-            default: false
-          vlan_id:
-            type: str
-            description: "Required if enable_vlan is true"
+            description: "Netmask when dhcp is false"
