@@ -1,12 +1,12 @@
 ---
 - name: Configure DHCP
-  ansible.builtin.command: synonet --dhcp {{ interface.iface }}
+  ansible.builtin.command: /usr/syno/sbin/synonet --dhcp {{ interface.iface }}
   when: interface.dhcp
   changed_when: true
 
 - name: Configure static ip
   ansible.builtin.command: >
-    synonet --manual {{ interface.iface }} static {{ interface.ip }}
+    /usr/syno/sbin/synonet --manual {{ interface.iface }} static {{ interface.ip }}
     {{ interface.mask }}
   when: not interface.dhcp
   changed_when: true
