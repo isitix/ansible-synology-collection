@@ -1,0 +1,27 @@
+---
+- vars:
+    iface: "{{ interface }}"
+    base_if: "{{ interface.name }}"
+    target_if: "{{ interface.name ~ '.' ~ interface.vlan_id if interface.enable_vlan else interface.name }}"
+
+- name: Create VLAN if enabled
+  ansible.builtin.command: synonet --create_vlan {{ base_if }} {{ interface.vlan_id }}
+  when: interface.enable_vlan
+  changed_when: true
+
+- name: Configure DHCP
+  ansible.builtin.command: synonet --set {{ target_if }} dhcp
+  when: interface.dhcp
+  changed_when: true
+
+- name: Configure static
+  ansible.builtin.command: >
+    synonet --set {{ target_if }} static {{ interface.address }}
+    {{ interface.netmask }} {{ interface.gateway | default('') }}
+  when: not interface.dhcp
+  changed_when: true
+
+- name: Configure DNS if defined
+  ansible.builtin.command: synoservicecfg --set dns {{ interface.dns }}
+  when: interface.dns is defined and interface.dns
+  changed_when: true

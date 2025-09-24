@@ -1,0 +1,6 @@
+---
+- ansible.builtin.import_tasks: list.yml
+  when:  accounts_do_add | default(false) or accounts_do_list | default(false)
+
+- ansible.builtin.import_tasks: edit_ipv4.yml
+  when: accounts_do_add | default(false)

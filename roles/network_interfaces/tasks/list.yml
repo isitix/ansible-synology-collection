@@ -1,0 +1,7 @@
+---
+- name: Get list of interfaces
+  become: true
+  ansible.builtin.command: "/usr/syno/sbin/synonet --show"
+  when: true
+  changed_when: false
+  register: existing_interfaces
