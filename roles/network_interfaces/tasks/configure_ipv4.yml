@@ -6,7 +6,7 @@
 
 - name: Configure static ip
   ansible.builtin.command: >
-    /usr/syno/sbin/synonet --manual {{ interface.iface }} static {{ interface.ip }}
+    /usr/syno/sbin/synonet --manual {{ interface.iface }} {{ interface.ip }}
     {{ interface.mask }}
   when: not interface.dhcp
   changed_when: true
