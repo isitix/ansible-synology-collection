@@ -4,4 +4,9 @@
   ansible.builtin.command: "/usr/syno/sbin/synonet --show"
   when: true
   changed_when: false
-  register: interfaces
+  register: show_interfaces
+
+- name: Save interfaces as fact
+  ansible.builtin.set_fact:
+    interfaces_raw: "{{ show_interfaces.stdout }}"
+    interfaces_list: "{{ show_interfaces.stdout_lines }}"
